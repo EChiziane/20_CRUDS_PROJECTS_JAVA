@@ -58,7 +58,8 @@ public class SecurityConfigurations {
                 "http://localhost:4200",
                 "https://customer-dashboard-angular-ng-zorro-s2hx.vercel.app",
                 "https://customer-dashboard-angular-ng-zorro-ghyxpkxf9.vercel.app",
-                "https://778b-197-218-60-63.ngrok-free.app"
+                "https://778b-197-218-60-63.ngrok-free.app",
+                "https://carload-system-management.vercel.app"
         ));
 
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
