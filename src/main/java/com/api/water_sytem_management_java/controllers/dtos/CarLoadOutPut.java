@@ -2,8 +2,10 @@ package com.api.water_sytem_management_java.controllers.dtos;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public record CarLoadOutPut(
+        UUID id,
         String deliveryDestination,    // Final delivery location
         String customerName,           // Name of the customer receiving materials
         String logisticsManagerName,

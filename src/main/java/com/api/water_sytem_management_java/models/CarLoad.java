@@ -26,16 +26,16 @@ public class CarLoad implements Serializable {
     private String deliveryDestination;    // Final delivery location
     private String customerName;           // Name of the customer receiving materials
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "manager_id")
     private Manager logisticsManagerName;
 
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "driver_id")
     private Driver assignedDriver;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sprint_id")
     private Sprint carloadBatchSprint;
 
@@ -80,6 +80,7 @@ public class CarLoad implements Serializable {
 
     public CarLoadOutPut toCarLoadOutPut() {
         return new CarLoadOutPut(
+                id,
                 deliveryDestination,
                 customerName,
                 logisticsManagerName.getName(),
