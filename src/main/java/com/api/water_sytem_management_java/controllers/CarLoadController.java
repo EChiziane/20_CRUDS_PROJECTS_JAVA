@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -51,6 +52,13 @@ public class CarLoadController {
         CarLoad carLoad = carLoadInput.toCarLoad(manager, driver, sprint); // Você deve ter este método no DTO
         CarLoad savedCarLoad = carLoadService.createCarLoad(carLoad);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedCarLoad);
+    }
+
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CarLoadOutPut> updateCarLoad(@PathVariable UUID id, @RequestBody CarLoadInput carLoadInput) {
+        Optional<CarLoadOutPut> updateCarload= carLoadService.carloadUpdate(id,carLoadInput);
+        return updateCarload.isPresent() ? ResponseEntity.ok(updateCarload.get()) : ResponseEntity.notFound().build();
     }
 
 

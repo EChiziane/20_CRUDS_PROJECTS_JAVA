@@ -1,8 +1,10 @@
 package com.api.water_sytem_management_java.models;
 
+import com.api.water_sytem_management_java.controllers.dtos.CarLoadStatus;
 import com.api.water_sytem_management_java.controllers.dtos.CarLoadOutPut;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -11,6 +13,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
+@Setter
 @Entity
 @Table(name = "tb_carloads")
 public class CarLoad implements Serializable {
@@ -43,7 +46,9 @@ public class CarLoad implements Serializable {
     private String customerPhoneNumber;    // Contact phone number of the customer
     private BigDecimal totalSpent;         // Money spent on the delivery
     private BigDecimal totalEarnings;      // Revenue from the delivery
-    private String deliveryStatus;         // Current status: e.g., "pending", "completed"
+    private CarLoadStatus deliveryStatus;         // Current status: e.g., "pending", "completed"
+
+    private LocalDateTime deliveryScheduledDate;
 
     public CarLoad() {
     }
@@ -57,7 +62,8 @@ public class CarLoad implements Serializable {
                    String customerPhoneNumber,
                    BigDecimal totalSpent,
                    BigDecimal totalEarnings,
-                   String deliveryStatus) {
+            LocalDateTime deliveryScheduledDate,
+                CarLoadStatus deliveryStatus) {
         this.deliveryDestination = deliveryDestination;
         this.customerName = customerName;
         this.logisticsManagerName = logisticsManagerName;
@@ -67,7 +73,9 @@ public class CarLoad implements Serializable {
         this.customerPhoneNumber = customerPhoneNumber;
         this.totalSpent = totalSpent;
         this.totalEarnings = totalEarnings;
+        this.deliveryScheduledDate=deliveryScheduledDate;
         this.deliveryStatus = deliveryStatus;
+
     }
 
     public CarLoadOutPut toCarLoadOutPut() {
@@ -75,13 +83,18 @@ public class CarLoad implements Serializable {
                 deliveryDestination,
                 customerName,
                 logisticsManagerName.getName(),
+                logisticsManagerName.getId().toString(),
                 assignedDriver.getName(),
+                assignedDriver.getId().toString(),
                 transportedMaterial,
                 carloadBatchSprint.getName(),
+                carloadBatchSprint.getId().toString(),
                 customerPhoneNumber,
                 totalSpent,
-                totalEarnings,
-                deliveryStatus
+               totalEarnings,
+                deliveryScheduledDate,
+               deliveryStatus
+
         );
     }
 

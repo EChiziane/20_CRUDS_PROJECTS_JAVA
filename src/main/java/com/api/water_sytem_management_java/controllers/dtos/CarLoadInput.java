@@ -6,6 +6,7 @@ import com.api.water_sytem_management_java.models.Manager;
 import com.api.water_sytem_management_java.models.Sprint;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public record CarLoadInput(
@@ -17,8 +18,9 @@ public record CarLoadInput(
         UUID carloadBatchId,       // Name of the delivery sprint or batch
         String customerPhoneNumber,    // Contact phone number of the customer
         BigDecimal totalSpent,         // Money spent on the delivery
-        BigDecimal totalEarnings,      // Revenue from the delivery
-        String deliveryStatus          // Current status: e.g., "pending", "completed"
+        BigDecimal totalEarnings,
+        LocalDateTime   deliveryScheduledDate,      // Revenue from the delivery
+        CarLoadStatus deliveryStatus          // Current status: e.g., "pending", "completed"
 ) {
     public CarLoad toCarLoad(Manager manager, Driver assignedDriver, Sprint carloadBatchName) {
         return new CarLoad(
@@ -31,6 +33,7 @@ public record CarLoadInput(
                 customerPhoneNumber,
                 totalSpent,
                 totalEarnings,
+                deliveryScheduledDate,
                 deliveryStatus
         );
     }
