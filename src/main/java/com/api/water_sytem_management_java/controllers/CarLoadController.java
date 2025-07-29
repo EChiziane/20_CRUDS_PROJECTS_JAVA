@@ -61,6 +61,13 @@ public class CarLoadController {
         return updateCarload.isPresent() ? ResponseEntity.ok(updateCarload.get()) : ResponseEntity.notFound().build();
     }
 
+    @PutMapping("/encerar/{id}")
+    public ResponseEntity<CarLoadOutPut> encerarCarLoad(@PathVariable UUID id) {
+        Optional<CarLoadOutPut> updateCarload= carLoadService.encerarCarload(id);
+        return updateCarload.isPresent() ? ResponseEntity.ok(updateCarload.get()) : ResponseEntity.notFound().build();
+    }
+
+
 
     @GetMapping
     public ResponseEntity<List<CarLoadOutPut>> getAllCarLoads() {
@@ -73,6 +80,9 @@ public class CarLoadController {
         CarLoadOutPut carLoad = carLoadService.getCarLoadById(id);
         return ResponseEntity.ok(carLoad);
     }
+
+
+
 
     @GetMapping("/sprint/{id}")
     public ResponseEntity<List<CarLoadOutPut>> getCarLoadBySprintId(@PathVariable UUID id) {

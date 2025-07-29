@@ -46,6 +46,8 @@ public class CarLoad implements Serializable {
     private String customerPhoneNumber;    // Contact phone number of the customer
     private BigDecimal totalSpent;         // Money spent on the delivery
     private BigDecimal totalEarnings;      // Revenue from the delivery
+
+
     private CarLoadStatus deliveryStatus;         // Current status: e.g., "pending", "completed"
 
     private LocalDateTime deliveryScheduledDate;

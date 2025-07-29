@@ -3,6 +3,7 @@ package com.api.water_sytem_management_java.services;
 
 import com.api.water_sytem_management_java.controllers.dtos.CarLoadInput;
 import com.api.water_sytem_management_java.controllers.dtos.CarLoadOutPut;
+import com.api.water_sytem_management_java.controllers.dtos.CarLoadStatus;
 import com.api.water_sytem_management_java.models.CarLoad;
 import com.api.water_sytem_management_java.models.Driver;
 import com.api.water_sytem_management_java.models.Manager;
@@ -51,6 +52,9 @@ public class CarLoadService {
                 .map(this::mapToCarLoadOutput)
                 .collect(Collectors.toList());
     }
+
+
+
 
     public List<CarLoadOutPut> getCarloadbySprint(UUID id) {
         return carLoadRepository.findByCarloadBatchSprintId(id)
@@ -101,6 +105,19 @@ public class CarLoadService {
             existingCarload.setLogisticsManagerName(manager);
             existingCarload.setAssignedDriver(driver);
             existingCarload.setCarloadBatchSprint(sprint);
+
+            // Persistir e retornar DTO
+            CarLoad updatedCarLoad = carLoadRepository.save(existingCarload);
+            return mapToCarLoadOutput(updatedCarLoad);
+        });
+    }
+
+    @Transactional
+    public Optional<CarLoadOutPut> encerarCarload(UUID id) {
+        return carLoadRepository.findById(id).map(existingCarload -> {
+
+            existingCarload.setDeliveryStatus(CarLoadStatus.DELIVERED);
+
 
             // Persistir e retornar DTO
             CarLoad updatedCarLoad = carLoadRepository.save(existingCarload);
