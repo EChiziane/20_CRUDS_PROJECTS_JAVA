@@ -120,7 +120,7 @@ public class ClassroomService {
 
         List<String> studentNames = classroom.getStudents()
                 .stream()
-                .map(Student::getName)
+                .map(Student::getNome)
                 .collect(Collectors.toList());
 
         List<UUID> studentIds = classroom.getStudents()
