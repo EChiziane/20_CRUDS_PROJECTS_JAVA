@@ -26,14 +26,14 @@ public class Payment implements Serializable {
     private Double amount;
     private String referenceMonth;
     private byte numMonths;
-    private String paymentMethod;
+    private PaymentMethod paymentMethod;
     private Boolean confirmed;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
     // Construtores
-    public Payment(Customer customer, Double amount, byte numMonths, String paymentMethod, Boolean confirmed) {
+    public Payment(Customer customer, Double amount, byte numMonths, PaymentMethod paymentMethod, Boolean confirmed) {
         this.customer = customer;
         this.amount = amount;
         this.numMonths = numMonths;
@@ -128,11 +128,11 @@ public class Payment implements Serializable {
         this.numMonths = numMonths;
     }
 
-    public String getPaymentMethod() {
+    public PaymentMethod getPaymentMethod() {
         return paymentMethod;
     }
 
-    public void setPaymentMethod(String paymentMethod) {
+    public void setPaymentMethod(PaymentMethod paymentMethod) {
         this.paymentMethod = paymentMethod;
     }
 

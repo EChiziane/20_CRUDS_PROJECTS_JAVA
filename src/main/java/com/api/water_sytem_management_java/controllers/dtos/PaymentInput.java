@@ -2,6 +2,7 @@ package com.api.water_sytem_management_java.controllers.dtos;
 
 import com.api.water_sytem_management_java.models.Customer;
 import com.api.water_sytem_management_java.models.Payment;
+import com.api.water_sytem_management_java.models.PaymentMethod;
 
 import java.util.UUID;
 
@@ -9,7 +10,7 @@ public record PaymentInput(
         UUID customerId,
         Double amount,
         byte numMonths,
-        String paymentMethod,
+       PaymentMethod paymentMethod,
         Boolean confirmed
 ) {
 

@@ -1,5 +1,7 @@
 package com.api.water_sytem_management_java.controllers.dtos;
 
+import com.api.water_sytem_management_java.models.PaymentMethod;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -13,10 +15,18 @@ public record PaymentOutput(
 
         byte numMonths,
         LocalDateTime paymentDate,
-        String paymentMethod) {
+        PaymentMethod paymentMethod) {
 
 
-    public PaymentOutput(UUID id, UUID customerId, String customerName, Double amount, boolean status, String referenceMonth, byte numMonths, LocalDateTime paymentDate, String paymentMethod) {
+    public PaymentOutput(UUID id,
+                         UUID customerId,
+                         String customerName,
+                         Double amount,
+                         boolean status,
+                         String referenceMonth,
+                         byte numMonths,
+                         LocalDateTime paymentDate,
+                        PaymentMethod paymentMethod) {
         this.id = id;
         this.customerId = customerId;
         this.customerName = customerName;

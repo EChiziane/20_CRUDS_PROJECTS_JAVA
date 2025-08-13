@@ -2,12 +2,14 @@ package com.api.water_sytem_management_java.controllers;
 
 import com.api.water_sytem_management_java.controllers.dtos.PaymentInput;
 import com.api.water_sytem_management_java.controllers.dtos.PaymentOutput;
+import com.api.water_sytem_management_java.controllers.dtos.StudentOutput;
 import com.api.water_sytem_management_java.models.Customer;
 import com.api.water_sytem_management_java.models.Payment;
 import com.api.water_sytem_management_java.repositories.CustomerRepository;
 import com.api.water_sytem_management_java.repositories.PaymentRepository;
 import com.api.water_sytem_management_java.services.PaymentService;
 
+import com.api.water_sytem_management_java.services.ReciboService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,16 +28,18 @@ public class PaymentController {
     private final CustomerRepository customerRepository;
 
     private final PaymentRepository paymentRepository;
+    private final ReciboService reciboService;
 
 
     public PaymentController(PaymentService paymentService,
                              CustomerRepository customerRepository,
 
-                             PaymentRepository paymentRepository) {
+                             PaymentRepository paymentRepository, ReciboService reciboService) {
         this.paymentService = paymentService;
         this.customerRepository = customerRepository;
 
         this.paymentRepository = paymentRepository;
+        this.reciboService = reciboService;
     }
 
     @PutMapping("/{id}")
@@ -63,14 +67,17 @@ public class PaymentController {
 
 
     @GetMapping("/invoice/{id}")
-    public String createPayment(@PathVariable UUID id) throws IOException {
+    ResponseEntity<StudentOutput>  createPayment(@PathVariable UUID id) throws IOException {
+;reciboService.atualizarStudentRecipt(id);
+    return  null;}
 
-        Payment payment = paymentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Payment not found"));
 
-        return "ResponseEntity.status(HttpStatus.CREATED).body(paymentService.savePayment(payment))";
+    @GetMapping("/recibo/{id}")
+    ResponseEntity<StudentOutput> generateRecipt(@PathVariable UUID id) throws IOException {
+        reciboService.atualizarStudentRecipt(id);
+        //  reciboService.imprimir(recibo);
+        return null;
     }
-
 
     @GetMapping
     public ResponseEntity<List<PaymentOutput>> getPayments() {
