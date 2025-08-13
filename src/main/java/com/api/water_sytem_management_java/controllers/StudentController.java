@@ -3,11 +3,14 @@ package com.api.water_sytem_management_java.controllers;
 import com.api.water_sytem_management_java.controllers.dtos.StudentInput;
 import com.api.water_sytem_management_java.controllers.dtos.StudentOutput;
 import com.api.water_sytem_management_java.models.Student;
+import com.api.water_sytem_management_java.services.ReciboService;
 import com.api.water_sytem_management_java.services.StudentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -18,9 +21,11 @@ import java.util.UUID;
 public class StudentController {
 
     private final StudentService studentService;
+    private final ReciboService reciboService;
 
-    public StudentController(StudentService studentService) {
+    public StudentController(StudentService studentService, ReciboService reciboService) {
         this.studentService = studentService;
+        this.reciboService = reciboService;
     }
 
     @PostMapping
@@ -32,6 +37,13 @@ public class StudentController {
     @GetMapping
     public ResponseEntity<List<StudentOutput>> getAllStudents() {
         return ResponseEntity.ok(studentService.getAllStudents());
+    }
+
+    @GetMapping("/recibo/{id}")
+    ResponseEntity<StudentOutput> generateRecipt(@PathVariable UUID id) throws IOException {
+        reciboService.atualizarStudentRecipt(id);
+      //  reciboService.imprimir(recibo);
+        return null;
     }
 
     @GetMapping("/{id}")
