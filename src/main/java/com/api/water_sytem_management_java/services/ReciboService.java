@@ -1,28 +1,35 @@
 package com.api.water_sytem_management_java.services;
 
-import com.api.water_sytem_management_java.models.Customer;
-import com.api.water_sytem_management_java.models.Payment;
-import com.api.water_sytem_management_java.models.Sprint;
-import com.api.water_sytem_management_java.models.Student;
+import com.api.water_sytem_management_java.controllers.dtos.ReciboInput;
+import com.api.water_sytem_management_java.controllers.dtos.ReciboOutPut;
+import com.api.water_sytem_management_java.models.*;
 import com.api.water_sytem_management_java.repositories.PaymentRepository;
+import com.api.water_sytem_management_java.repositories.ReciboRepository;
 import com.api.water_sytem_management_java.repositories.StudentRepository;
+import jakarta.transaction.Transactional;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.awt.*;
 import java.io.*;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class ReciboService {
 
     private final StudentRepository studentRepository;
+    private final ReciboRepository reciboRepository;
 private final PaymentRepository paymentRepository;
 
-    public ReciboService(StudentRepository studentRepository, PaymentRepository paymentRepository) {
+    public ReciboService(StudentRepository studentRepository, ReciboRepository reciboRepository, PaymentRepository paymentRepository) {
         this.studentRepository = studentRepository;
+        this.reciboRepository = reciboRepository;
         this.paymentRepository = paymentRepository;
     }
 
@@ -110,6 +117,32 @@ private final PaymentRepository paymentRepository;
         workbook.close();
 
         return outputFile;
+    }
+
+    @Transactional
+    public Recibo createRecibo(Recibo recibo) {
+        return reciboRepository.save(recibo);
+    }
+
+    public List<ReciboOutPut> getAllRecibos() {
+        return reciboRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"))
+                .stream()
+                .map(Recibo::toReciboOutPut)
+                .collect(Collectors.toList());
+    }
+
+    public void deleteRecibo(UUID id) {
+        reciboRepository.deleteById(id);
+    }
+
+    @Transactional
+    public Optional<ReciboOutPut> updateRecibo(UUID id, ReciboInput input) {
+        return reciboRepository.findById(id)
+                .map(existing -> {
+                    Recibo updated = input.toRecibo();
+                    updated.setId(existing.getId());
+                    return reciboRepository.save(updated).toReciboOutPut();
+                });
     }
 
 }
