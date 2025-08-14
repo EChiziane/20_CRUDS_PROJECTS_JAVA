@@ -57,16 +57,15 @@ public class CarLoadController {
 
     @PutMapping("/{id}")
     public ResponseEntity<CarLoadOutPut> updateCarLoad(@PathVariable UUID id, @RequestBody CarLoadInput carLoadInput) {
-        Optional<CarLoadOutPut> updateCarload= carLoadService.carloadUpdate(id,carLoadInput);
+        Optional<CarLoadOutPut> updateCarload = carLoadService.carloadUpdate(id, carLoadInput);
         return updateCarload.isPresent() ? ResponseEntity.ok(updateCarload.get()) : ResponseEntity.notFound().build();
     }
 
     @PutMapping("/encerar/{id}")
     public ResponseEntity<CarLoadOutPut> encerarCarLoad(@PathVariable UUID id) {
-        Optional<CarLoadOutPut> updateCarload= carLoadService.encerarCarload(id);
+        Optional<CarLoadOutPut> updateCarload = carLoadService.encerarCarload(id);
         return updateCarload.isPresent() ? ResponseEntity.ok(updateCarload.get()) : ResponseEntity.notFound().build();
     }
-
 
 
     @GetMapping
@@ -80,8 +79,6 @@ public class CarLoadController {
         CarLoadOutPut carLoad = carLoadService.getCarLoadById(id);
         return ResponseEntity.ok(carLoad);
     }
-
-
 
 
     @GetMapping("/sprint/{id}")

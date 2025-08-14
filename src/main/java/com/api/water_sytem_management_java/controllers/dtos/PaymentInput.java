@@ -10,7 +10,7 @@ public record PaymentInput(
         UUID customerId,
         Double amount,
         byte numMonths,
-       PaymentMethod paymentMethod,
+        PaymentMethod paymentMethod,
         Boolean confirmed
 ) {
 

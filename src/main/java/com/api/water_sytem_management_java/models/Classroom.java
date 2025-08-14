@@ -15,18 +15,15 @@ import java.util.UUID;
 @Table(name = "tb_classrooms")
 public class Classroom implements Serializable {
 
+    private final LocalDateTime createdAt = LocalDateTime.now();
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-
     private String name;
-
     private String schedule; // e.g. "Mon-Wed-Fri 08:00-10:00"
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "head_teacher_id")
     private Teacher headTeacher;
-
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "classroom_assistant_teachers",
@@ -34,7 +31,6 @@ public class Classroom implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "teacher_id")
     )
     private List<Teacher> assistantTeachers;
-
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "classroom_students",
@@ -43,9 +39,8 @@ public class Classroom implements Serializable {
     )
     private List<Student> students;
 
-    private final LocalDateTime createdAt = LocalDateTime.now();
-
-    public Classroom() {}
+    public Classroom() {
+    }
 
     public Classroom(String name, String schedule, Teacher headTeacher,
                      List<Teacher> assistantTeachers, List<Student> students) {

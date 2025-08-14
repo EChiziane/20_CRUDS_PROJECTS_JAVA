@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -28,17 +27,22 @@ public class Recibo implements Serializable {
 
     private String numeroRecibo;
     private LocalDate dataRecibo;
-    private UUID idPayment;
+   // private UUID paymentId;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "payment_id")
+    private Payment payment;
+
     private String fileName;
     private String filePath;
 
     public Recibo() {
     }
 
-    public Recibo(String numeroRecibo, UUID idPayment, String fileName, String filePath) {
+    public Recibo(String numeroRecibo, Payment payment, String fileName, String filePath) {
         this.numeroRecibo = numeroRecibo;
         this.dataRecibo = LocalDateTime.now().toLocalDate();
-        this.idPayment = idPayment;
+        this.payment = payment;
         this.fileName = fileName;
         this.filePath = filePath;
     }
@@ -46,8 +50,9 @@ public class Recibo implements Serializable {
     public ReciboOutPut toReciboOutPut() {
         return new ReciboOutPut(
                 id,
-                idPayment,
-fileName,
+                payment.getId(),
+                payment.getCustomer().getName(),
+                fileName,
                 filePath,
                 createdAt
         );

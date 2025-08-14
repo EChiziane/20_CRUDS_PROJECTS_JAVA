@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -42,7 +41,7 @@ public class StudentController {
     @GetMapping("/recibo/{id}")
     ResponseEntity<StudentOutput> generateRecipt(@PathVariable UUID id) throws IOException {
         reciboService.atualizarStudentRecipt(id);
-      //  reciboService.imprimir(recibo);
+        //  reciboService.imprimir(recibo);
         return null;
     }
 

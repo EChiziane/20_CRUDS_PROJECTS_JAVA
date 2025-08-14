@@ -18,7 +18,7 @@ public record CarLoadOutPut(
         String customerPhoneNumber,    // Contact phone number of the customer
         BigDecimal totalSpent,         // Money spent on the delivery
         BigDecimal totalEarnings,
-        LocalDateTime   deliveryScheduledDate,     // Revenue from the delivery
+        LocalDateTime deliveryScheduledDate,     // Revenue from the delivery
         CarLoadStatus deliveryStatus          // Current status: e.g., "pending", "completed"
 ) {
 

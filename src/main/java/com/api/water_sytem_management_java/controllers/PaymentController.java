@@ -8,7 +8,6 @@ import com.api.water_sytem_management_java.models.Payment;
 import com.api.water_sytem_management_java.repositories.CustomerRepository;
 import com.api.water_sytem_management_java.repositories.PaymentRepository;
 import com.api.water_sytem_management_java.services.PaymentService;
-
 import com.api.water_sytem_management_java.services.ReciboService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -67,9 +66,10 @@ public class PaymentController {
 
 
     @GetMapping("/invoice/{id}")
-    ResponseEntity<StudentOutput>  createPayment(@PathVariable UUID id) throws IOException {
-;reciboService.atualizarStudentRecipt(id);
-    return  null;}
+    ResponseEntity<StudentOutput> createPayment(@PathVariable UUID id) throws IOException {
+        reciboService.atualizarStudentRecipt(id);
+        return null;
+    }
 
 
     @GetMapping("/recibo/{id}")

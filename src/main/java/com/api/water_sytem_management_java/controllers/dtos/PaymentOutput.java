@@ -26,7 +26,7 @@ public record PaymentOutput(
                          String referenceMonth,
                          byte numMonths,
                          LocalDateTime paymentDate,
-                        PaymentMethod paymentMethod) {
+                         PaymentMethod paymentMethod) {
         this.id = id;
         this.customerId = customerId;
         this.customerName = customerName;

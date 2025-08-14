@@ -4,6 +4,6 @@ public enum CarLoadStatus {
 
     SCHEDULED,     // Agendada
     DELIVERED,     // Entregue
-    PENDING ,
+    PENDING,
     ENTREGUE// Por Entregar
 }

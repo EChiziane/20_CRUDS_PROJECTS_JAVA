@@ -36,8 +36,8 @@ public class CarLoadService {
                           SprintRepository sprintRepository,
                           DriverRepository driverRepository) {
         this.carLoadRepository = carLoadRepository;
-        this.sprintRepository= sprintRepository;
-        this.driverRepository= driverRepository;
+        this.sprintRepository = sprintRepository;
+        this.driverRepository = driverRepository;
         this.managerRepository = managerRepository;
     }
 
@@ -52,8 +52,6 @@ public class CarLoadService {
                 .map(this::mapToCarLoadOutput)
                 .collect(Collectors.toList());
     }
-
-
 
 
     public List<CarLoadOutPut> getCarloadbySprint(UUID id) {

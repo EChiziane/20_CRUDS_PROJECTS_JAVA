@@ -1,7 +1,7 @@
 package com.api.water_sytem_management_java.models;
 
-import com.api.water_sytem_management_java.controllers.dtos.CarLoadStatus;
 import com.api.water_sytem_management_java.controllers.dtos.CarLoadOutPut;
+import com.api.water_sytem_management_java.controllers.dtos.CarLoadStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -47,7 +47,7 @@ public class CarLoad implements Serializable {
     private BigDecimal totalSpent;         // Money spent on the delivery
     private BigDecimal totalEarnings;      // Revenue from the delivery
 
-@Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private CarLoadStatus deliveryStatus;         // Current status: e.g., "pending", "completed"
 
     private LocalDateTime deliveryScheduledDate;
@@ -64,8 +64,8 @@ public class CarLoad implements Serializable {
                    String customerPhoneNumber,
                    BigDecimal totalSpent,
                    BigDecimal totalEarnings,
-            LocalDateTime deliveryScheduledDate,
-                CarLoadStatus deliveryStatus) {
+                   LocalDateTime deliveryScheduledDate,
+                   CarLoadStatus deliveryStatus) {
         this.deliveryDestination = deliveryDestination;
         this.customerName = customerName;
         this.logisticsManagerName = logisticsManagerName;
@@ -75,7 +75,7 @@ public class CarLoad implements Serializable {
         this.customerPhoneNumber = customerPhoneNumber;
         this.totalSpent = totalSpent;
         this.totalEarnings = totalEarnings;
-        this.deliveryScheduledDate=deliveryScheduledDate;
+        this.deliveryScheduledDate = deliveryScheduledDate;
         this.deliveryStatus = deliveryStatus;
 
     }
@@ -94,9 +94,9 @@ public class CarLoad implements Serializable {
                 carloadBatchSprint.getId().toString(),
                 customerPhoneNumber,
                 totalSpent,
-               totalEarnings,
+                totalEarnings,
                 deliveryScheduledDate,
-               deliveryStatus
+                deliveryStatus
 
         );
     }

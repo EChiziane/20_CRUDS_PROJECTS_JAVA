@@ -2,19 +2,23 @@ package com.api.water_sytem_management_java.services;
 
 import com.api.water_sytem_management_java.controllers.dtos.ReciboInput;
 import com.api.water_sytem_management_java.controllers.dtos.ReciboOutPut;
-import com.api.water_sytem_management_java.models.*;
+import com.api.water_sytem_management_java.models.Customer;
+import com.api.water_sytem_management_java.models.Payment;
+import com.api.water_sytem_management_java.models.Recibo;
 import com.api.water_sytem_management_java.repositories.PaymentRepository;
 import com.api.water_sytem_management_java.repositories.ReciboRepository;
 import com.api.water_sytem_management_java.repositories.StudentRepository;
 import jakarta.transaction.Transactional;
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.awt.*;
-import java.io.*;
-import java.time.LocalDateTime;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -25,7 +29,7 @@ public class ReciboService {
 
     private final StudentRepository studentRepository;
     private final ReciboRepository reciboRepository;
-private final PaymentRepository paymentRepository;
+    private final PaymentRepository paymentRepository;
 
     public ReciboService(StudentRepository studentRepository, ReciboRepository reciboRepository, PaymentRepository paymentRepository) {
         this.studentRepository = studentRepository;
@@ -34,22 +38,20 @@ private final PaymentRepository paymentRepository;
     }
 
     public void imprimir(File file) throws IOException {
-     //   Desktop desktop = Desktop.getDesktop();
-    //    desktop.print(file); // Isso envia para a impressora padrão
+        //   Desktop desktop = Desktop.getDesktop();
+        //    desktop.print(file); // Isso envia para a impressora padrão
     }
 
 
     public void atualizarStudentRecipt(UUID id) throws IOException {
-    //    Student student = studentRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("Student not found"));
-        Payment payment = paymentRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("Payment not found"));
-        Customer customer= payment.getCustomer();
+        //    Student student = studentRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("Student not found"));
+        Payment payment = paymentRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Payment not found"));
+        Customer customer = payment.getCustomer();
 
-        File reciboPayment= atualizarReciboPayment(customer,payment);
-
+        File reciboPayment = atualizarReciboPayment(customer, payment);
 
 
     }
-
 
 
     public File atualizarReciboPayment(Customer customer, Payment payment) throws IOException {
@@ -92,9 +94,6 @@ private final PaymentRepository paymentRepository;
     }
 
 
-
-
-
     public File atualizarRecibo(String nome, String endereco, String data) throws IOException {
         // Carregar o template
         FileInputStream fis = new FileInputStream("templates/recibo_template.xlsx");
@@ -122,29 +121,37 @@ private final PaymentRepository paymentRepository;
     @Transactional
     public Recibo createRecibo(UUID paymentId) throws IOException {
 
-        Payment payment = paymentRepository.findById(paymentId).orElseThrow(()->
+        Payment payment = paymentRepository.findById(paymentId).orElseThrow(() ->
                 new IllegalArgumentException("Payment not found"));
 
-        String formattedName =payment.getCustomer().getName().replaceAll("\\s+", "_");
+        String formattedName = payment.getCustomer().getName().replaceAll("\\s+", "_");
         String formattedDateTime = payment.getCreatedAt()
                 .format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm"));
         String fileName = String.format("Invoice_%s_%s.xlsx", formattedName, formattedDateTime);
 
         Recibo recibo = new Recibo(
                 "20175922",
-                paymentId,
+                payment,
                 fileName,
                 fileName
         );
 
-       ;
-        recibo.setFilePath( atualizarReciboPayment(payment.getCustomer(),payment).getPath());
+        recibo.setFilePath(atualizarReciboPayment(payment.getCustomer(), payment).getPath());
 
         return reciboRepository.save(recibo);
     }
 
     public List<ReciboOutPut> getAllRecibos() {
         return reciboRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"))
+                .stream()
+                .map(Recibo::toReciboOutPut)
+                .collect(Collectors.toList());
+    }
+
+
+
+    public List<ReciboOutPut> getAllPaymentRecibos(UUID id) {
+        return reciboRepository.findByPaymentId(id,Sort.by(Sort.Direction.DESC, "createdAt"))
                 .stream()
                 .map(Recibo::toReciboOutPut)
                 .collect(Collectors.toList());

@@ -31,7 +31,8 @@ public class Student implements Serializable {
     @Enumerated(EnumType.STRING)
     private EnglishLevel ultimoNivelIngles;
 
-    public Student() {}
+    public Student() {
+    }
 
     public Student(String nome, String numeroEstudante, String bi, LocalDate dataNascimento,
                    String endereco, String nivelAcademico, EnglishLevel ultimoNivelIngles) {

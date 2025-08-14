@@ -13,4 +13,5 @@ public record ClassroomOutput(
         List<UUID> assistantTeacherIds,
         List<String> studentNames,
         List<UUID> studentIds
-) {}
+) {
+}

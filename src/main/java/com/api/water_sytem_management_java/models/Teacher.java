@@ -24,7 +24,8 @@ public class Teacher implements Serializable {
     @Enumerated(EnumType.STRING)
     private TeacherType type;
 
-    public Teacher() {}
+    public Teacher() {
+    }
 
     public Teacher(String name, String email, String phoneNumber, String specialization, TeacherType type) {
         this.name = name;

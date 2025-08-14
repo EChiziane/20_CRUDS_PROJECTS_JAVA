@@ -9,4 +9,5 @@ public record ClassroomInput(
         UUID headTeacherId,
         List<UUID> assistantTeacherIds,
         List<UUID> studentIds
-) {}
+) {
+}
