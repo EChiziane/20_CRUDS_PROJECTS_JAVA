@@ -19,19 +19,5 @@ public record ReceiptInput(
         BigDecimal precoUnitario,
         BigDecimal totalPagar
 ) {
-    public Recibo toRecibo() {
-        return new Recibo(
-                nomeCliente,
-                numeroCliente,
-                enderecoCliente,
-                numeroRecibo,
-                dataPagamento,
-                dataRecibo,
-                idCliente,
-                descricaoProduto,
-                quantidade,
-                precoUnitario,
-                totalPagar
-        );
-    }
+
 }

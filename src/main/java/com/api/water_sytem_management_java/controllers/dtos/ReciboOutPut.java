@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public record ReciboOutPut(
         UUID id,
-        String nomeCliente,
+        UUID paymentId,
         String fileName,
         String filePath,
         LocalDateTime createdAt

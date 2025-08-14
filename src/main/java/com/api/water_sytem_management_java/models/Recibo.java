@@ -15,7 +15,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "tb_receipts")
+@Table(name = "tb_receipts1")
 public class Recibo implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -26,44 +26,29 @@ public class Recibo implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    private String nomeCliente;
-    private String numeroCliente;
-    private String enderecoCliente;
     private String numeroRecibo;
-    private LocalDate dataPagamento;
     private LocalDate dataRecibo;
-    private UUID idCliente;
-    private String descricaoProduto;
-    private int quantidade;
-    private BigDecimal precoUnitario;
-    private BigDecimal totalPagar;
-
+    private UUID idPayment;
     private String fileName;
     private String filePath;
 
     public Recibo() {
     }
 
-    public Recibo(String nomeCliente,
-                  String numeroCliente,
-                  String enderecoCliente,
-                  String numeroRecibo,
-                  LocalDate dataPagamento,
-                  LocalDate dataRecibo,
-                  UUID idCliente,
-                  String descricaoProduto,
-                  int quantidade,
-                  BigDecimal precoUnitario,
-                  BigDecimal totalPagar) {
+    public Recibo(String numeroRecibo, UUID idPayment, String fileName, String filePath) {
+        this.numeroRecibo = numeroRecibo;
+        this.dataRecibo = LocalDateTime.now().toLocalDate();
+        this.idPayment = idPayment;
+        this.fileName = fileName;
+        this.filePath = filePath;
     }
 
     public ReciboOutPut toReciboOutPut() {
         return new ReciboOutPut(
                 id,
-                nomeCliente,
-                numeroCliente,
-                enderecoCliente,
-
+                idPayment,
+fileName,
+                filePath,
                 createdAt
         );
     }

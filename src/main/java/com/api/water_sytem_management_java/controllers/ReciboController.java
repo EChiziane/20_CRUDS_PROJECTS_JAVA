@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -24,8 +26,8 @@ public class ReciboController {
     }
 
     @PostMapping
-    public ResponseEntity<Recibo> createRecibo(@RequestBody ReciboInput input) {
-        Recibo saved = reciboService.createRecibo(input.toRecibo());
+    public ResponseEntity<Recibo> createRecibo(@RequestBody ReciboInput input) throws IOException {
+        Recibo saved = reciboService.createRecibo(input.paymentId());
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
@@ -45,4 +47,25 @@ public class ReciboController {
         reciboService.deleteRecibo(id);
         return ResponseEntity.noContent().build();
     }
+
+
+    @GetMapping("/download/{id}")
+    public ResponseEntity<byte[]> downloadRecibo(@PathVariable UUID id) throws IOException {
+        Recibo recibo = reciboService.getReciboEntity(id)
+                .orElseThrow(() -> new IllegalArgumentException("Recibo não encontrado"));
+
+        File file = new File(recibo.getFilePath());
+        if (!file.exists()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        byte[] fileContent = java.nio.file.Files.readAllBytes(file.toPath());
+
+        return ResponseEntity.ok()
+                .header("Content-Disposition", "attachment; filename=\"" + recibo.getFileName() + "\"")
+                .header("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                .body(fileContent);
+    }
+
+
 }

@@ -120,7 +120,26 @@ private final PaymentRepository paymentRepository;
     }
 
     @Transactional
-    public Recibo createRecibo(Recibo recibo) {
+    public Recibo createRecibo(UUID paymentId) throws IOException {
+
+        Payment payment = paymentRepository.findById(paymentId).orElseThrow(()->
+                new IllegalArgumentException("Payment not found"));
+
+        String formattedName =payment.getCustomer().getName().replaceAll("\\s+", "_");
+        String formattedDateTime = payment.getCreatedAt()
+                .format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm"));
+        String fileName = String.format("Invoice_%s_%s.xlsx", formattedName, formattedDateTime);
+
+        Recibo recibo = new Recibo(
+                "20175922",
+                paymentId,
+                fileName,
+                fileName
+        );
+
+       ;
+        recibo.setFilePath( atualizarReciboPayment(payment.getCustomer(),payment).getPath());
+
         return reciboRepository.save(recibo);
     }
 
@@ -144,5 +163,10 @@ private final PaymentRepository paymentRepository;
                     return reciboRepository.save(updated).toReciboOutPut();
                 });
     }
+
+    public Optional<Recibo> getReciboEntity(UUID id) {
+        return reciboRepository.findById(id);
+    }
+
 
 }
