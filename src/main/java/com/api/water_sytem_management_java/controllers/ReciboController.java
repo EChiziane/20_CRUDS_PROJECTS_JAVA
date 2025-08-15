@@ -36,6 +36,12 @@ public class ReciboController {
         return ResponseEntity.ok(reciboService.getAllRecibos());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<List<ReciboOutPut>> getRecibosByPayment(@PathVariable UUID id) {
+        return ResponseEntity.ok(reciboService.getAllPaymentRecibos(id));
+    }
+
+
     @PutMapping("/{id}")
     public ResponseEntity<ReciboOutPut> updateRecibo(@PathVariable UUID id, @RequestBody ReciboInput input) {
         Optional<ReciboOutPut> updated = reciboService.updateRecibo(id, input);
