@@ -1,9 +1,10 @@
 package com.api.water_sytem_management_java.repositories;
 
-import com.api.water_sytem_management_java.models.Classroom;
+
+import com.api.water_sytem_management_java.models.Vehicle;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
 
-public interface ClassroomRepository extends JpaRepository<Classroom, UUID> {
+public interface VehicleRepository extends JpaRepository<Vehicle, UUID> {
 }

@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "tb_vehicles")
+@Table(name = "tb_vehicles1")
 public class Vehicle implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
