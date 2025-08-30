@@ -1,8 +1,7 @@
 package com.api.water_sytem_management_java.models;
 
-package com.api.vehicle_management.models;
 
-import com.api.vehicle_management.controllers.dtos.VehicleOutput;
+import com.api.water_sytem_management_java.controllers.dtos.VehicleOutput;
 import jakarta.persistence.*;
 
 import java.io.Serial;
