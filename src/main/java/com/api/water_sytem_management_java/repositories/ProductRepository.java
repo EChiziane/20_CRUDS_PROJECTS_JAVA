@@ -1,8 +1,6 @@
 package com.api.water_sytem_management_java.repositories;
 
 
-
-
 import com.api.water_sytem_management_java.models.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 

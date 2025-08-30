@@ -42,15 +42,47 @@ public class Vehicle implements Serializable {
     }
 
     // Getters e setters
-    public UUID getId() { return id; }
-    public String getModel() { return model; }
-    public void setModel(String model) { this.model = model; }
-    public String getBrand() { return brand; }
-    public void setBrand(String brand) { this.brand = brand; }
-    public Integer getYear() { return year; }
-    public void setYear(Integer year) { this.year = year; }
-    public String getLicensePlate() { return licensePlate; }
-    public void setLicensePlate(String licensePlate) { this.licensePlate = licensePlate; }
-    public Double getMileage() { return mileage; }
-    public void setMileage(Double mileage) { this.mileage = mileage; }
+    public UUID getId() {
+        return id;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
+    }
+
+    public String getLicensePlate() {
+        return licensePlate;
+    }
+
+    public void setLicensePlate(String licensePlate) {
+        this.licensePlate = licensePlate;
+    }
+
+    public Double getMileage() {
+        return mileage;
+    }
+
+    public void setMileage(Double mileage) {
+        this.mileage = mileage;
+    }
 }
