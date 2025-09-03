@@ -1,5 +1,6 @@
 package com.api.water_sytem_management_java.models;
 
+import com.api.water_sytem_management_java.controllers.PedidoOutput;
 import com.api.water_sytem_management_java.controllers.dtos.PedidoStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
