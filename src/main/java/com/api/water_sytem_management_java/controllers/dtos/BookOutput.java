@@ -1,6 +1,5 @@
 package com.api.water_sytem_management_java.controllers.dtos;
 
-package com.api.library_management.controllers.dtos;
 
 import java.util.UUID;
 
